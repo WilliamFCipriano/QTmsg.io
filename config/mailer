@@ -1,5 +1,5 @@
 //  Mail Config //
 
 // Mailgun //
-key = [mailgun api key]
-url = [mailgun url]
+key = key-2a590ed7a67220f5759f3a6b3724d3ff
+url = noreply.qtmsg.io
