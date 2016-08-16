@@ -2,10 +2,16 @@
 
 ####MVP ALPHA FEATURES:
 
-1.admin users
-2.email chat invites
-3.chat message id's
-4.code block support
-5.list users in chat
-6.duffie-hellman key exchange for initial key generation
-7.allow admin kicking and promotion of users
+admin users
+
+email chat invites
+
+chat message id's
+
+code block support
+
+list users in chat
+
+duffie-hellman key exchange for initial key generation
+
+allow admin kicking and promotion of users
