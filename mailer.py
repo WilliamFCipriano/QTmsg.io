@@ -1,13 +1,12 @@
 import requests
+import config
 
-key = 'key-4bc35a0f63ccc1c1efb16dffb67f248f'
-domain = 'noreply.qtmsg.io'
-url = 'noreply.qtmsg.io'
+config = config.configurationData('mailer')
 
 
 def invite_user(sender, recipient, message, chat):
-    request_url = 'https://api.mailgun.net/v2/{0}/messages'.format(url)
-    request = requests.post(request_url, auth=('api', key), data={
+    request_url = 'https://api.mailgun.net/v2/{0}/messages'.format(config.url)
+    request = requests.post(request_url, auth=('api', config.key), data={
     'from': 'chat-invite@noreply.qtmsg.io',
     'to': recipient,
     'subject': 'Chat Invite from ' + sender + ' for ' + chat,

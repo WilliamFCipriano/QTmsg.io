@@ -1,0 +1,5 @@
+//  Mail Config //
+
+// Mailgun //
+key = [mailgun api key]
+url = [mailgun url]
