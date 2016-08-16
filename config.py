@@ -3,7 +3,6 @@ import sys
 from inspect import getframeinfo, stack
 
 
-
 reserved_word_list = ['y','Y','TRUE','True','true','t','n','N','FALSE','False','false','f']
 # reserved words can be mapped to states, values or objects.
 
