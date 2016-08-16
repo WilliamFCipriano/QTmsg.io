@@ -1,0 +1,12 @@
+// MAIN CONFIG FILE //
+
+// debugging options //
+debug_mode = TRUE
+logging_enabled = TRUE
+
+// Server DH //
+dh_private_bits = 8
+
+
+// Time Formatting //
+time_format = %-I:%M:%S %Z

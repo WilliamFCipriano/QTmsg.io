@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <title>qtmsg.io - free, anonymous, and disposable chat rooms</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/static/css/raleway-font.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/css/chat-main.css">
+  <script type=text/javascript src="/static/js/jquery.js"></script>
+  <link rel="icon" type="image/png" href="/static/images/favicon.png">
+
+</head>
+<body>
+
+
+  <div id="login-title">Sign In</div>
+
+  <div id="login-panel">
+
+   <form method="post" action="/login">
+  <br>Username </br>
+       <br> <input type="text" name="username" id="sign-in-box" autofocus> </br>
+  <br>Chat ID </br>
+       <br> <input type="text" name="chat_id" id="sign-in-box" value="{{ chat_id }}"> </br>
+
+<br>  <input type="submit" class="login-button" value="Log In"> </br>
+       </form>
+  </div>
+
+
+</body>
+</html>

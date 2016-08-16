@@ -1,0 +1,6 @@
+**** LOG CONFIG FILE ****
+// logging is enabled by the main config file //
+
+** STORAGE OPTIONS **
+application_relative_path = TRUE
+log_location = logs/

@@ -1,0 +1,11 @@
+# boot configuration file
+
+    config folder location:
+application_relative_path = TRUE
+config_location = /config/
+
+    failure mode:
+hard_fail_on_error = TRUE
+
+    debug:
+debug_output_verbosity = 6

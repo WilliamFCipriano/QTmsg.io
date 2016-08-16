@@ -1,0 +1,25 @@
+@font-face {
+		font-family: "EmojiSymbols";
+		src: url('/static/fonts/EmojiSymbols.woff') format('woff');
+		font-style: normal;
+	}
+
+.button {
+
+	font-family: "EmojiSymbols";
+	font-size: 8vh;
+    text-align: right;
+}
+.button a:link {
+	color: black;
+}
+.button a:visited {
+	color: black;
+}
+.button a:hover {
+	color: red;
+}
+
+.dice {
+	content: "&#x1F3B0;"
+}
