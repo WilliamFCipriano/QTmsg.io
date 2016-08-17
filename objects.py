@@ -87,8 +87,6 @@ class Room:
         self.duffie_hellman_keys = dict()
 
     def check_admin(self, token):
-        print token
-        print self.admin_tokens
         if token in self.admin_tokens:
             return True
         else:
