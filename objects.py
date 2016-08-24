@@ -224,7 +224,6 @@ class Room:
         if token in self.tokens:
             keydata = self.duffie_hellman_keys[token]
             crypto_key = (int(client_public_key)**keydata['private_key'])%keydata['public_n']
-            # XOR chat key with DH key we just created and send to client
             # NOTE:
             # I understand this is mostly a heavy level of obfuscation as opposed to security, but this should
             # also be wrapped in SSL.This is merely a countermeasure to prevent nosy sysadmins in
