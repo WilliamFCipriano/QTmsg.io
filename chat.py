@@ -8,6 +8,10 @@ def badAuth(token):
     return jsonify({'Status':'BAD AUTH'})
 
 
+@app.route('/')
+def index():
+    return redirect('/login/lobby')
+
 @app.route('/r/<chat_id>')
 def hello_world(chat_id):
     return render_template('room.html',chat_id = chat_id)
