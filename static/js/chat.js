@@ -412,7 +412,7 @@ function uiToggle(ui) {
 //URL modal
 
 $(function() {
-    $('#url-form').on('keyup', function(e) {
+    $('#link-form').on('keyup', function(e) {
         if (e.which == 13 && ! e.shiftKey) {
             addUrl();
         }
@@ -421,7 +421,7 @@ $(function() {
 
 function addUrl() {
     var cur = $('#msg-data').text();
-    $('#msg-data').val(cur + '[link]' + $('#url-form').val() + '[/link]');
+    $('#msg-data').val(cur + '[link]' + $('#link-form').val() + '[/link]');
     uiToggle('link');
 }
 
@@ -486,7 +486,7 @@ function setUsers() {
     $.each(userStore, function(key, value) {
         if ($.inArray(value, userViewed) < 0) {
             userViewed.push(value);
-     select.append($("<option></option>")
+     select.append($("<option title='" + key + "'></option>")
                     .attr("value",key)
                     .text(value)); }
 });

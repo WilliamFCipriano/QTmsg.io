@@ -16,9 +16,6 @@
 .button a:visited {
 	color: black;
 }
-.button a:hover {
-	color: red;
-}
 
 .dice {
 	content: "&#x1F3B0;"

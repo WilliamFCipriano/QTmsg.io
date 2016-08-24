@@ -9,6 +9,7 @@ body {
     overflow-y: scroll;
     max-width: 82%;
     height: 95vh;
+    background-color: #FFFFFF;
 }
 
 #chat-message {

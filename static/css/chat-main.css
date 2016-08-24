@@ -135,40 +135,91 @@ iframe {
 
 
 #invite {
-    height: 30vh;
-    width: 25vw;
-
+    height: 50vh;
+    max-height: 250px;
+    width: 60vw;
+    max-width: 200px;
 }
 
 #link {
-    height: 23vh;
-    width: 30vw;
+    height: 40vh;
+    max-height: 175px;
+    width: 60vw;
+    max-width: 300px;
+
+}
+
+#link-form {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 
 }
 
 #code {
-    height: 40vh;
-    width: 41vw;
+    height: 55vh;
+    max-height: 280px;
+    max-width: 600px;
+    width: 65vw;
 }
 
 
 #code-form {
     width: 60vw;
-    height: 30vh;
-    align-self: center;
+    height: 20vh;
+    max-height: 150px;
+    max-width: 580px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #admin {
     width: 40vw;
-    height: 20vh;
+    height: 60vh;
+    max-height: 200px;
+    max-width: 200px;
     align-self: center;
 }
 
+#admin-user-list {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 #users {
     position: absolute;
     top: 5vh;
+    font-size: 2vw;
+    color: rgba(182, 175, 169, 1);
     left: 1%;
     height: 80vh;
     width: 15vw;
-    z-index: 1;
+    max-width: 100px;
+    z-index: -1;
+    visibility: hidden;
+}
+
+#cancel-button {
+    color: rgba(227, 14, 14, 0.75);
+    font-size: 45px;
+}
+
+#cancel-button:hover {
+    color: rgba(227, 0, 22, 1);
+}
+
+#accept-button {
+    color: rgba(81, 227, 42, 0.75);
+    font-size: 45px;
+}
+
+#accept-button:hover {
+    color: rgba(0, 151, 68, 1);
+}
+
+@media (min-width: 768px) {
+    #users {
+       visibility: visible;
+   }
 }

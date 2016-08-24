@@ -68,27 +68,27 @@
   </div>
 </div>
 
-<div class="modal" id="invite" draggable="true"><h3><center>Invite friends to this chat</center></h3>
+<div class="modal" id="invite" draggable="true"><h3><center>Invite users to this chat</center></h3>
     Email: <input type="text" name="recipient" id="recipient">  <br>
                   Message: <input type="text" name="inv-msg" id="inv-msg"> <br><br>
-    <div id="panel-item"><div class="button" id="invite-cancel"><a onclick="uiToggle('invite')">&#x2716;</a></div></div><div id="panel-item"><div class="button" id="invite-send"><a onclick="inviteUser()">&#x2714;</a></div></div>
+    <div id="panel-item"><div class="button" id="cancel-button" title="Cancel and close this window"><a onclick="uiToggle('invite')">&#x2716;</a></div></div><div id="panel-item"><div class="button" id="accept-button" title="Accept and send invite"><a onclick="inviteUser()">&#x2714;</a></div></div>
 </div>
 
   <div class="modal" id="link" draggable="true"><h3><center>Add a url to your message</center></h3>
-    URL: <input type="text" name="url-form" id="url-form">  <br>
-    <div id="panel-item"><div class="button" id="link-cancel"><a onclick="uiToggle('link')">&#x2716;</a></div></div><div id="panel-item"><div class="button" id="link-send"><a onclick="addUrl()">&#x2714;</a></div></div>
+    <input type="text" name="link-form" id="link-form" title="URL to be added to your message">  <br>
+    <div id="panel-item"><div class="button" id="cancel-button"><a onclick="uiToggle('link')">&#x2716;</a></div></div><div id="panel-item"><div class="button" id="accept-button"><a onclick="addUrl()">&#x2714;</a></div></div>
 </div>
 
   <div class="modal" id="code" draggable="true"><h3><center>Add code to your message</center></h3>
     <textarea name="code-form" id="code-form"></textarea>  <br>
-    <div id="panel-item"><div class="button" id="link-cancel"><a onclick="uiToggle('code')">&#x2716;</a></div></div><div id="panel-item"><div class="button" id="code-send"><a onclick="addCode()">&#x2714;</a></div></div>
+    <div id="panel-item"><div class="button" id="cancel-button" title="Close this dialog box"><a onclick="uiToggle('code')">&#x2716;</a></div></div><div id="panel-item"><div class="button" id="accept-button" title="Add code to message"><a onclick="addCode()">&#x2714;</a></div></div>
 </div>
 
     <div class="modal" id="admin" draggable="true" hidden><h3><center>Administrator Functions</center></h3>
-    User to kick: <select id="admin-user-list" name="admin-user-list"> </select>
-        <a onclick="adminKick()">kick</a>
-         <a onclick="adminPromote()">Promote</a>
-    <div id="panel-item"><div class="button" id="link-cancel"><a onclick="uiToggle('admin')">&#x2716;</a></div></div>
+    <select id="admin-user-list" name="admin-user-list"> </select><br>
+        <div id="panel-item"><div class="button" id="cancel-button" title="Kick selected user"><a onclick="adminKick()">&#x1F45F;</a></div></div>
+         <div id="panel-item"><div class="button" id="accept-button" title="Promote selected user"><a onclick="adminPromote()">&#x261D;</a></div></div>
+    <div id="panel-item"><div class="button" id="cancel-button" title="Close this dialog box"><a onclick="uiToggle('admin')">&#x2716;</a></div></div>
 </div>
 
 <div id="users" draggable="true">
