@@ -2,6 +2,7 @@ body {
     font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+
 #chat-box {
     position: relative;
     left: 18%;
@@ -30,6 +31,13 @@ body {
 }
 
 .chat-message img {
-    max-width: 10vw;
-    max-height: 10vh;
+    min-height: 1vh;
+    min-width: 1vw;
+    max-width: 30vw;
+    max-height: 40vh;
+    display: block;
+}
+
+.chat-message a:active {
+    outline: none;
 }
