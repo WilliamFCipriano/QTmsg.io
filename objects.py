@@ -74,6 +74,7 @@ class Room:
         self.room = str(room_name)
         self.admin_tokens = list()
         self.users = dict()
+        self.warned_users = dict()
         self.tokens = dict()
         self.chat = dict()
         self.randKey = token_gen(randkey_length)
@@ -91,6 +92,9 @@ class Room:
             return True
         else:
             return False
+
+    def get_name(self,token):
+        return self.tokens[token]
 
     def message(self, token, message, crypto):
         if token in self.tokens:
@@ -117,6 +121,11 @@ class Room:
             return False
 
     def new_user(self, username):
+
+        # Always sanitize usernames despite this
+        if "<" in username or ">" in username:
+            return False
+
         token_len = randint(20, 30)
         token = token_gen(token_len)
         if username not in self.users.keys():
@@ -126,6 +135,7 @@ class Room:
             self.tokens[token] = username
             self.chat[len(self.chat) + 1] = 'roomUpdate*' + str(username) + ' has joined the room at ' + cur_time()
             return self.users[username]
+
         else:
             return False
 
@@ -140,12 +150,18 @@ class Room:
 
     def roll_die(self, token, sides):
         if token in self.tokens:
+
+            if sides > 120:
+                sides = 120
+
             if sides > 1:
                 roll_result = randint(1, int(sides))
             else:
                 roll_result = 1
+
             self.chat[len(self.chat) + 1] = 'diceRoll*' + self.tokens[str(token)] + ' rolled a ' + str(
                 roll_result) + '/' + str(sides)
+
             return roll_result
         else:
             return False
@@ -171,28 +187,35 @@ class Room:
                 if function == 'kick':
                     for user in self.users:
                         if user == argument:
-                            try:
-                                del self.tokens[self.users[argument]]
-                                del self.users[argument]
-                                self.chat[len(self.chat) + 1] = 'roomUpdate*<i>' + user + ' has been kicked from ' + self.room + ' at ' + cur_time() + '.</i>'
-                                return True
-                            except KeyError:
-                                return False
+                            del self.tokens[self.users[argument]]
+                            del self.users[argument]
+                            self.chat[len(self.chat) + 1] = 'roomUpdate*<i>' + user + ' has been kicked from ' + self.room + ' at ' + cur_time() + '.</i>'
+                            return True
                     return False
 
                 if function == 'promote':
                     for user in self.users:
-                        print user
-                        print argument
                         if user == argument:
-                            try:
-                                if self.tokens[self.users[argument]] not in self.admin_tokens:
-                                    self.admin_tokens.append(self.users[argument])
-                                    self.chat[len(self.chat) + 1] = 'roomUpdate*<i>' + user + ' has been promoted to admin on ' + self.room + ' at ' + cur_time() + '.</i'
-                                return True
-                            except KeyError:
-                                return False
+                            if self.tokens[self.users[argument]] not in self.admin_tokens:
+                                self.admin_tokens.append(self.users[argument])
+                                self.chat[len(self.chat) + 1] = 'roomUpdate*<i>' + user + ' has been promoted to admin on ' + self.room + ' at ' + cur_time() + '.</i>'
+                            return True
                     return False
+
+                if function == 'warn':
+                    print 'warning ' + str(argument) + str(type(argument))
+                    for user in self.users:
+                        if user == argument:
+
+                            self.chat[len(self.chat) + 1] = 'roomUpdate*<i>' + user + '</i> has been warned by <b>'\
+                                                            + self.get_name(token) + '</b>. ' \
+                                                            'Continued violations shall result in forceful ' \
+                                                            'removal from the room.</font>'
+                            self.warned_users.append(user)
+
+                            return True
+                    return False
+
 
     def user_list(self, token):
         if token in self.tokens:

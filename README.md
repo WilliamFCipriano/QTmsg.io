@@ -1,6 +1,6 @@
 ## QTmsg.io
 
-### Warning: This is alpha software, when implemented over HTTPS it should be as secure as any HTTPS applcation but this is not designed to be used over HTTP for secure communcations.
+### Warning: This is alpha software, when implemented over HTTPS it should be as secure as any HTTPS application but this is not designed to be used over HTTP for secure communcations.
 
 ####Completed Features:
 
@@ -17,6 +17,8 @@ list users in chat
 duffie-hellman key exchange for initial key generation
 
 allow admin kicking and promotion of users
+
+configured for nginx/uwsgi
 
 ####In progress:
 only scroll when scrollbar is 95% of the way down

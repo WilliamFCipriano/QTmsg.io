@@ -192,18 +192,16 @@ function getUsers() {
     $.post('/api/' + chat_id + '/getUsers', session, function (users) {
         var i = '';
         for (var user in users) {
-            console.log(userStore.indexOf(user[users]));
             if (userStore.indexOf(user[users]) >= -1) {
+
                 userStore.push(users[user]);
             }
-            console.log(userStore.indexOf(user[users]));
 
-            i += '<li>' + users[user] + '</li>';
+            i += '<li>' + sanitize(users[user]) + '</li>';
         }
         $("#user-list").empty();
         $("#user-list").append(i);
         setUsers();
-        console.log(userStore);
     }, 'json');
 
 
@@ -425,6 +423,12 @@ function addUrl() {
     uiToggle('link');
 }
 
+function addImage() {
+    var cur = $('#msg-data').text();
+    $('#msg-data').val(cur + '[image]' + $('#image-form').val() + '[/image]');
+    uiToggle('image');
+}
+
 
 //Code modal
 
@@ -492,6 +496,18 @@ function setUsers() {
 });
 
 
+}
+
+function admin_exec(func) {
+    var session = {'_token': getCookie(chat_id), '_user': $('#admin-user-list option:selected').text()};
+    $.post('/api/' + chat_id + '/' + func, session, function (result) { }, 'json');
+
+}
+
+function adminWarn() {
+    console.log($('#admin-user-list option:selected').text());
+    var session = {'_token': getCookie(chat_id), '_user': $('#admin-user-list option:selected').text()};
+    $.post('/api/' + chat_id + '/warn', session, function (result) { }, 'json');
 }
 
 function adminKick() {

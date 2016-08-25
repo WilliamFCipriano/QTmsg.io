@@ -57,11 +57,12 @@ var tags = {
 function sanitize(string) {
 
     /** remove script and div tags **/
-    message = string.replace(/<.*?script.*?>.*?<\/.*?script.*?>/igm, '&lt;script&gt;');
-    message = message.replace(/<.*?div.*?>.*?<\/.*?div.*?>/igm, '&lt;div&gt;');
-    message = message.replace(/<.*?link.*?>.*?<\/.*?link.*?>/igm, '&lt;link&gt;');
-    message = message.replace(/<.*?embed.*?>.*?<\/.*?embed.*?>/igm, '&lt;embed&gt;');
-    message = message.replace(/<.*?param.*?>.*?<\/.*?param.*?>/igm, '&lt;param&gt;');
+    message = string.replace(/<.*?script.*?>/igm, '&lt;script&gt;');
+    message = message.replace(/<.*?div.*?>/igm, '&lt;div&gt;');
+    message = message.replace(/<.*?link.*?>/igm, '&lt;link&gt;');
+    message = message.replace(/<.*?embed.*?>/igm, '&lt;embed&gt;');
+    message = message.replace(/<.*?param.*?>/igm, '&lt;param&gt;');
+    message = message.replace(/<.*?img.*?>/igm, '&lt;img&gt;');
 
 
     lowercaseMessage = message.toLowerCase();

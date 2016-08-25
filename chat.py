@@ -121,6 +121,14 @@ def chat(roomName,function):
         else:
             return jsonify({'Status':'BAD AUTH'})
 
+    if function == 'warn':
+        result = room.admin_exec(token,'warn',request.form['_user'])
+        if result:
+            return jsonify({'Status':'OK'})
+        else:
+            return jsonify({'Status':'BAD AUTH'})
+
+
 
 
 if __name__ == '__main__':

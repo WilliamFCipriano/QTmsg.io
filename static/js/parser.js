@@ -54,6 +54,21 @@ function parse(string) {
         }
     }
 
+    var image = string.indexOf('[image]');
+    var imageEnd = string.indexOf('[/image]');
+
+    if (image != -1) {
+        if (imageEnd != -1) {
+
+            var imageMod = '';
+            imageMod = string.substring(image,imageEnd + 8);
+            console.log(imageMod);
+            imageClean = imageMod.replace('[image]',' ');
+            imageClean = imageClean.replace('[/image]',' ');
+            string = string.replace(imageMod, '<a href="' + escapeHTML(imageClean) + '" target="_blank"><img src="' + escapeHTML(imageClean) + '" onerror="this.style.display=\'none\'"></a>');
+
+        }
+    }
         return string;
 
 }
