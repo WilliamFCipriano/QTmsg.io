@@ -35,7 +35,7 @@ body {
     min-width: 1vw;
     max-width: 30vw;
     max-height: 40vh;
-    display: block;
+    display: flex;
 }
 
 .chat-message a:active {

@@ -2,10 +2,10 @@ import string
 import random
 from random import randint
 import time
-import threading
 import primegen
 import mailer
 import config
+from uwsgidecorators import timer
 
 # Global assets
 config = config.configurationData('chat')
@@ -54,15 +54,16 @@ def token_gen(length):
                    for _ in range(int(length)))
 
 
+@timer(30)
 def room_update():
+    print 'running room update'
     to_be_removed = list()
-    refresh_time = time.time() - 3600
+    refresh_time = time.time() - 30
     for chat_room in room_list:
         if room_list[chat_room].last_refresh <= refresh_time:
             to_be_removed.append(chat_room)
     for room in to_be_removed:
         del room_list[room]
-    threading.Timer(60, room_update).start()
 
 
 
