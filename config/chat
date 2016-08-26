@@ -10,3 +10,7 @@ dh_private_bits = 8
 
 // Time Formatting //
 time_format = %-I:%M:%S %Z
+
+
+// Misc //
+inactive_room_wipe_time = 3600
