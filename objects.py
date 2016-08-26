@@ -5,7 +5,15 @@ import time
 import primegen
 import mailer
 import config
-from uwsgidecorators import timer
+
+
+# Bit of a hack to get everything to work in the dev env.
+try:
+    from uwsgidecorators import timer
+    uwsgi_on = True
+except ImportError:
+    import threading
+    uwsgi_on = False
 
 # Global assets
 config = config.configurationData('chat')
@@ -53,10 +61,8 @@ def token_gen(length):
         + string.digits)
                    for _ in range(int(length)))
 
-
-@timer(30)
+# Clears out old rooms
 def room_update():
-    print 'running room update'
     to_be_removed = list()
     refresh_time = time.time() - 30
     for chat_room in room_list:
@@ -64,7 +70,19 @@ def room_update():
             to_be_removed.append(chat_room)
     for room in to_be_removed:
         del room_list[room]
+    if not uwsgi_on:
+        threading.Timer(60, room_update).start()
 
+# Uses uwsgi's timer
+if uwsgi_on:
+    @timer(30)
+    def update():
+        f = open('uwsgi-log','a')
+        f.write('X')
+        f.close()
+        room_update()
+else:
+    threading.Timer(60, room_update).start()
 
 
 class Room:
