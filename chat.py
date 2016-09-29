@@ -26,6 +26,10 @@ def login_page(chat_id):
 def login():
     username = request.form.get('username')
     room = objects.get_room(request.form.get('chat_id'))
+
+    if len(username) < 3 or username[0] == " ":
+        return 'Invalid username, please try again'
+
     token = room.new_user(username)
     if token:
         response = make_response(redirect('/r/' + request.form.get('chat_id')))

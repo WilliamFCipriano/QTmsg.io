@@ -14,7 +14,7 @@ var userStore = [];
 var userViewed = [];
 
 /** debug modes **/
-var crypto_debug = false;
+var crypto_debug = true;
 var admin_debug = false;
 
 function getCookie(name) {
@@ -44,7 +44,7 @@ function translateKey(key, salt) {
     // create a bit more obscurity.
     var hashStack = '';
 
-    // minimum 2,5k rounds recommended (generates 640kb of data at 2.5k), output should be larger than the L1 and L2 cache of attackers CPU
+    // minimum 2,5k rounds recommended (generates 640kb of data at 2.5k)
     // so they will be forced to store hashStack in slower memory.
     // only effective in slowing attackers down if the Diffie Hellman is broken in such a way that a large number of potential keys have
     // to be attempted, Again, not security but another layer of obfuscation.
@@ -132,6 +132,10 @@ function diceRoll(sides){
 function send_msg(message) {
     var is_crypto;
 
+    if (message == '\n') {
+    return; }
+
+
     if (CryptoEnabled) {
         if (PrivateCryptoKey == '') {
             message = sjcl.encrypt(ChatCryptoKey, message);
@@ -212,6 +216,12 @@ function diffieHellman() {
     var session = {'_token': getCookie(chat_id)};
      $.post('/api/' + chat_id + '/dh-negotiation', session, function (Keydata) {
          var result = getDiffie(bigInt(Keydata['public_n']),bigInt(Keydata['public_g']),bigInt(Keydata['server_key']));
+         
+         if (result == false) {
+         console.log('diffie-hellman failed, reloading chat.'); 
+         location.reload(true);
+         return false;
+         }
 
          if (crypto_debug == true) {
              console.log('Attempting DH negotiation phase with public n:' + Keydata['public_n'] + ' public g:' + Keydata['public_g'] + ' and server key:' + Keydata['server_key']); }
