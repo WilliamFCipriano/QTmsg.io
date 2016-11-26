@@ -151,8 +151,12 @@ class Room:
     def roll_die(self, token, sides):
         if token in self.tokens:
 
-            if sides > 120:
+            print sides
+
+            if int(sides) > 120:
                 sides = 120
+
+            print sides
 
             if sides > 1:
                 roll_result = randint(1, int(sides))

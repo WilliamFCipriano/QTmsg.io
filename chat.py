@@ -76,6 +76,7 @@ def chat(roomName,function):
             return jsonify({'Status':'BAD AUTH'})
 
     if function == 'diceRoll':
+        print request.form['_sides']
         result = room.roll_die(token,request.form['_sides'])
         return jsonify({'diceRoll': str(result)})
 

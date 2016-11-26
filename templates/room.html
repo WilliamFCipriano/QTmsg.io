@@ -99,6 +99,14 @@
     <div id="panel-item"><div class="button" id="cancel-button" title="Close this dialog box"><a onclick="uiToggle('admin')">&#x2716;</a></div></div>
 </div>
 
+  <div class="modal" id="dice" draggable="true" hidden><h3><center>Dice Roll</center></h3>
+    <select id="admin-user-list" name="admin-user-list"> </select><br>
+         <div id="panel-item"><div class="button" id="accept-button" title="Promote selected user"><a onclick="admin_exec('promote')">&#x261D;</a></div></div>
+        <div id="panel-item"><div class="button" id="cancel-button" title="Warn selected user"><a onclick="admin_exec('warn')">&#x1F44E;</a></div></div>
+        <div id="panel-item"><div class="button" id="cancel-button" title="Kick selected user"><a onclick="admin_exec('kick')">&#x1F45F;</a></div></div>
+    <div id="panel-item"><div class="button" id="cancel-button" title="Close this dialog box"><a onclick="uiToggle('admin')">&#x2716;</a></div></div>
+</div>
+
 <div id="users" draggable="true">
 
     <ul id="user-list">
