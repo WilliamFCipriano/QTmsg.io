@@ -12,6 +12,7 @@ var imAdmin = false;
 var duffieKey = false;
 var userStore = [];
 var userViewed = [];
+var soundsEnabled = true;
 
 /** debug modes **/
 var crypto_debug = true;
@@ -120,6 +121,14 @@ function privateKey() {
 }
 
 // Dice roll for DnD, returns the number rolled when provided with the number of sides
+
+function dice(){
+    var type = $('#dice-size-select');
+    console.log(type);
+    diceRoll(type.val());
+    console.log(type.val());
+
+}
 
 function diceRoll(sides){
     var rolldata = {'_token': getCookie(chat_id), '_sides': sides};
@@ -289,6 +298,9 @@ function chat_update(single) {
 
                         if (data[id].split('*', 1)[0] == 'diceRoll') {
                             messages.push('<li><div class="chat-message"> ' + sanitize(data[id].substr(data[id].indexOf("*") + 1), true) + '</div></li>');
+                            // play roll sound
+                            playSound('roll');
+
                         }
 
                         if (data[id].split('*', 1)[0] == 'cryptUpdate') {
@@ -400,6 +412,22 @@ function chat_update(single) {
 
 
 
+}
+
+//sound code
+
+function playSound(sound) {
+    if (soundsEnabled) {
+        try {
+            $('#' + sound + 'Sound').trigger("play");
+        }
+        catch (err) {
+            console.log(err);
+            return false;
+        }
+        return true;
+    }
+    return falseS;
 }
 
 // modal code begins
