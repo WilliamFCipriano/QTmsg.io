@@ -560,7 +560,7 @@ function imHere() {
         if (feature_debug == true) {
             console.log('Sending presence update')
         }
-    var session = {'_token': getCookie(chat_id)}; 
+    var session = {'_token': getCookie(chat_id)};
     $.post('/api/' + chat_id + '/im-here', session, function (result) {
         presenceUpdated = new Date().getTime();
     }, 'json');
