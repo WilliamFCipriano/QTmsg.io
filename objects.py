@@ -74,21 +74,29 @@ class Room:
         self.room = str(room_name)
         self.admin_tokens = list()
         self.users = dict()
+        self.user_last_refresh = dict()
         self.warned_users = dict()
         self.tokens = dict()
         self.chat = dict()
         self.randKey = token_gen(randkey_length)
         self.salt = token_gen(salt_length)
         self.password = False
-
+        self.last_user_refresh = time.time()
         self.chat[1] = 'roomUpdate*<b>' + 'Welcome to ' + self.room + ', it is ' + cur_time() + '.'
-
         self.last_update = time.time()
         self.last_refresh = time.time()
         self.duffie_hellman_keys = dict()
 
     def check_admin(self, token):
         if token in self.admin_tokens:
+            return True
+        else:
+            return False
+
+    def im_here(self,token):
+        if token in self.tokens:
+            self.user_last_refresh[token] = time.time()
+            self.update_users()
             return True
         else:
             return False
@@ -138,7 +146,6 @@ class Room:
 
         else:
             return False
-
 
     def set_crypto(self, token):
         if self.check_admin(token):
@@ -220,6 +227,21 @@ class Room:
                             return True
                     return False
 
+    def leave_room(self,token):
+        if token in self.tokens:
+            username = self.tokens[token]
+            try:
+                del self.users[username]
+                del self.tokens[token]
+                del self.admin_tokens[token]
+            except Exception as ex:
+                print ex
+            self.chat[len(self.chat) + 1] = 'roomUpdate*' + str(username) + ' has left the room at ' + cur_time()
+
+    def update_users(self):
+        for token, refresh_time in self.user_last_refresh.iteritems():
+            if refresh_time + 60 < time.time():
+                self.leave_room(token)
 
     def user_list(self, token):
         if token in self.tokens:

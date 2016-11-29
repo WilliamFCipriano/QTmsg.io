@@ -13,10 +13,12 @@ var duffieKey = false;
 var userStore = [];
 var userViewed = [];
 var soundsEnabled = true;
+var presenceUpdated = false;
 
 /** debug modes **/
 var crypto_debug = true;
-var admin_debug = false;
+var admin_debug = true;
+var feature_debug = true;
 
 function getCookie(name) {
     if (!(name in Cookies)) {
@@ -30,12 +32,8 @@ function getCookie(name) {
         return Cookies[name]
 }
 
-function replaceAll(str, find, replace) {
-  return str.replace(new RegExp(find, 'g'), replace);
-}
-
 // Translates server key into 64 character client key
-// Currently this key is never generated server side so it can be considered weakly zero knowledge.
+// Currently this key is never generated server side so it can be considered very weakly zero knowledge.
 function translateKey(key, salt) {
 
     var newKey = sjcl.hash.sha256.hash(key);
@@ -124,9 +122,7 @@ function privateKey() {
 
 function dice(){
     var type = $('#dice-size-select');
-    console.log(type);
     diceRoll(type.val());
-    console.log(type.val());
 
 }
 
@@ -177,7 +173,6 @@ function send_msg(message) {
 function checkAdmin() {
     var session = {'_token': getCookie(chat_id)};
     $.post('/api/' + chat_id + '/isAdmin', session, function (result) {
-        console.log(result['admin']);
         if (result['admin'] == 'OK') {
             if (admin_debug == true) {
         console.log('User is admin, showing UI');
@@ -271,6 +266,7 @@ function chat_update(single) {
         var session = {'_last_id': chat_length, '_token': getCookie(chat_id)};
 
     $.post('/api/' + chat_id + '/chat', session, function (chat_data, status) {
+        imHere();
         chat_length = $('#chat-board').contents().find('#chat-session li').length;
         var data = chat_data;
         if (chat_data['Status'] == 'OK') {
@@ -555,15 +551,25 @@ function adminKick() {
 }
 
 function adminPromote() {
-    console.log($('#admin-user-list option:selected').text());
     var session = {'_token': getCookie(chat_id), '_user': $('#admin-user-list option:selected').text()};
     $.post('/api/' + chat_id + '/promote', session, function (result) { }, 'json');
 }
 
+function imHere() {
+    if ((presenceUpdated <= new Date().getTime() - 30000) || (presenceUpdated == false)) {
+        if (feature_debug == true) {
+            console.log('Sending presence update')
+        }
+    var session = {'_token': getCookie(chat_id)}; 
+    $.post('/api/' + chat_id + '/im-here', session, function (result) {
+        presenceUpdated = new Date().getTime();
+    }, 'json');
+} }
 // modal code ends
 
 
 if (typeof chat_id !== 'undefined') {
+    imHere();
     checkAdmin();
     diffieHellman();
 }

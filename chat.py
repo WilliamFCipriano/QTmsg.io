@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, make_response, redirect
+from flask import Flask, jsonify, render_template, request, make_response, redirect, send_from_directory
 import objects
 
 app = Flask(__name__)
@@ -10,7 +10,7 @@ def badAuth(token):
 
 @app.route('/')
 def index():
-    return redirect('/login/lobby')
+    return send_from_directory('static/html', 'index.html')
 
 @app.route('/r/<chat_id>')
 def hello_world(chat_id):
@@ -132,6 +132,13 @@ def chat(roomName,function):
             return jsonify({'Status':'OK'})
         else:
             return jsonify({'Status':'BAD AUTH'})
+
+    if function == 'im-here':
+        if room.im_here(token):
+            return jsonify({'Status':'OK'})
+        else:
+            return jsonify({'Status':'BAD AUTH'})
+
 
 
 
