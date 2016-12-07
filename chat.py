@@ -139,9 +139,15 @@ def chat(roomName,function):
         else:
             return jsonify({'Status':'BAD AUTH'})
 
+    if function == 'im-gone':
+        try:
+            room.leave_room(token)
+        except Exception as ex:
+            print ex
+
 
 
 
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0',use_reloader=False)
+    app.run(debug=True,host='0.0.0.0',use_reloader=False,)

@@ -178,7 +178,7 @@ iframe {
 }
 
 #admin {
-    width: 40vw;
+    width: 50vw;
     height: 60vh;
     max-height: 200px;
     max-width: 200px;
@@ -186,8 +186,11 @@ iframe {
 }
 
 #dice {
-    width: 15vw;
-    height: 20vh;
+    width: 20vw;
+    height: 55vh;
+    max-height: 150px;
+    max-width: 185px;
+    min-width: 165px;
 }
 
 #dice-size-select {

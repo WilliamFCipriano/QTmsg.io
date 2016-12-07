@@ -539,13 +539,11 @@ function admin_exec(func) {
 }
 
 function adminWarn() {
-    console.log($('#admin-user-list option:selected').text());
     var session = {'_token': getCookie(chat_id), '_user': $('#admin-user-list option:selected').text()};
     $.post('/api/' + chat_id + '/warn', session, function (result) { }, 'json');
 }
 
 function adminKick() {
-    console.log($('#admin-user-list option:selected').text());
     var session = {'_token': getCookie(chat_id), '_user': $('#admin-user-list option:selected').text()};
     $.post('/api/' + chat_id + '/kick', session, function (result) { }, 'json');
 }
@@ -565,13 +563,18 @@ function imHere() {
         presenceUpdated = new Date().getTime();
     }, 'json');
 } }
+
+function imGone() {
+    var session = {'_token': getCookie(chat_id)};
+    $.post('/api/' + chat_id + '/im-gone', session, function(result) {
+        alert('You have exited ' + chat_id)
+    }, 'json');
+}
 // modal code ends
 
 
 if (typeof chat_id !== 'undefined') {
-    imHere();
     checkAdmin();
     diffieHellman();
+    imHere();
 }
-
-
