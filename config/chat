@@ -14,3 +14,7 @@ time_format = %-I:%M:%S %Z
 
 // Misc //
 inactive_room_wipe_time = 3600
+
+// per IP rate limting //
+global_rate_limit = 25/second
+request_rate_limit = 10/second;160/minute;1600/hour

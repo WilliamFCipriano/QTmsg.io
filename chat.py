@@ -1,8 +1,20 @@
 from flask import Flask, jsonify, render_template, request, make_response, redirect, send_from_directory
 import objects
+import sys
+import config
+
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
+config = config.configurationData('chat')
 
 app = Flask(__name__)
 
+limiter = Limiter(
+    app,
+    key_func=get_remote_address,
+    global_limits=[config.lookup('global_rate_limit')]
+)
 
 def badAuth(token):
     return jsonify({'Status':'BAD AUTH'})
@@ -15,7 +27,6 @@ def index():
 @app.route('/r/<chat_id>')
 def hello_world(chat_id):
     return render_template('room.html',chat_id = chat_id)
-
 
 @app.route('/login/<chat_id>', methods=['GET'])
 def login_page(chat_id):
@@ -38,7 +49,7 @@ def login():
     else:
         return render_template('sign-in.html',chat_id = '')
 
-
+@limiter.limit(config.lookup('request_rate_limit'))
 @app.route('/api/<roomName>/<function>', methods=['GET', 'POST'])
 def chat(roomName,function):
     room = objects.get_room(roomName)
@@ -55,7 +66,10 @@ def chat(roomName,function):
             return jsonify({'Status':'BAD AUTH'})
 
     if function == 'msg':
-        if room.message(token,request.form['msg'],request.form['_is_crypto']):
+        message = request.form['msg']
+        if sys.getsizeof(message) > 16000:
+            return jsonify({'Status':'MESSAGE TOO LARGE'})
+        if room.message(token,message,request.form['_is_crypto']):
             return jsonify({'Status':'OK'})
         else:
             return jsonify({'Status':'BAD AUTH'})
