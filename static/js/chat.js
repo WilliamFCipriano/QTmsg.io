@@ -3,6 +3,14 @@
 
 // To be compressed and compiled before use
 
+/** debug modes **/
+
+var crypto_debug = false;
+var admin_debug = false;
+var feature_debug = false;
+
+/** global variables **/
+
 var CryptoEnabled = true;
 var ChatCryptoKey = '';
 var RoomSalt = '';
@@ -15,10 +23,6 @@ var userViewed = [];
 var soundsEnabled = true;
 var presenceUpdated = false;
 
-/** debug modes **/
-var crypto_debug = false;
-var admin_debug = false;
-var feature_debug = false;
 
 function getCookie(name) {
     if (!(name in Cookies)) {
@@ -215,6 +219,7 @@ function getUsers() {
 
 
 }
+
 // first stage of DH, the DH key is calucated here.
 function diffieHellman() {
     var session = {'_token': getCookie(chat_id)};
