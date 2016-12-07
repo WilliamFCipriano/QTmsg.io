@@ -141,6 +141,7 @@ iframe {
 #invite {
     height: 50vh;
     max-height: 250px;
+    min-height: 225px;
     width: 60vw;
     max-width: 200px;
 }
@@ -150,6 +151,7 @@ iframe {
     max-height: 175px;
     width: 60vw;
     max-width: 300px;
+    min-height: 150px;
 
 }
 
@@ -164,6 +166,7 @@ iframe {
     max-height: 280px;
     max-width: 600px;
     width: 65vw;
+    min-height: 200px;
 }
 
 
@@ -210,6 +213,7 @@ iframe {
     max-height: 175px;
     width: 60vw;
     max-width: 300px;
+    min-height: 150px;
 }
 
 #image-form {

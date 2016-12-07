@@ -132,7 +132,7 @@ function dice(){
 
 function diceRoll(sides){
     var rolldata = {'_token': getCookie(chat_id), '_sides': sides};
-    $.post('/api/' + chat_id + '/diceRoll', rolldata, function (roll) {
+    $.post('/api/' + chat_id + '/diceRoll', rolldata, function () {
         chat_update(true);
     }, 'json');
 }
@@ -201,6 +201,7 @@ function checkAdmin() {
 
 function getUsers() {
     var session = {'_token': getCookie(chat_id)};
+    var listObject = $("#user-list");
     $.post('/api/' + chat_id + '/getUsers', session, function (users) {
         var i = '';
         for (var user in users) {
@@ -211,8 +212,8 @@ function getUsers() {
 
             i += '<li>' + sanitize(users[user]) + '</li>';
         }
-        $("#user-list").empty();
-        $("#user-list").append(i);
+        listObject.empty();
+        listObject.append(i);
         setUsers();
     }, 'json');
 
@@ -247,7 +248,7 @@ function diffieHellman() {
 }
 
 // second stage of DH, the DH key is sent to the server and decoded here
-function diffieHellmanExchange(public_key,crypto_key) {
+function diffieHellmanExchange(public_key) {
     if (crypto_debug == true) {
             console.log('Attempting DH key exchange with server...'); }
 
@@ -268,12 +269,13 @@ function diffieHellmanExchange(public_key,crypto_key) {
 
 // chat_update is a little too complicated, will improve in later versions.
 function chat_update(single) {
-        var chat_length = $('#chat-board').contents().find('#chat-session li').length;
+        var chatBoardObject = $('#chat-board');
+        var chat_length = chatBoardObject.contents().find('#chat-session li').length;
         var session = {'_last_id': chat_length, '_token': getCookie(chat_id)};
 
     $.post('/api/' + chat_id + '/chat', session, function (chat_data, status) {
         imHere();
-        chat_length = $('#chat-board').contents().find('#chat-session li').length;
+        chat_length = chatBoardObject.contents().find('#chat-session li').length;
         var data = chat_data;
         if (chat_data['Status'] == 'OK') {
             var user_update = false;
@@ -372,7 +374,7 @@ function chat_update(single) {
 
                 } }
 
-            $('#chat-board').contents().find('#chat-session').append(messages.join(""));
+            chatBoardObject.contents().find('#chat-session').append(messages.join(""));
 
             if (user_update) {
                 getUsers();
@@ -380,7 +382,7 @@ function chat_update(single) {
             }
 
             window.setTimeout(function () {
-                var chat_box = $('#chat-board').contents().find('#chat-box');
+                var chat_box = chatBoardObject.contents().find('#chat-box');
                 chat_box.animate({scrollTop: chat_box.prop("scrollHeight")}, 300)
             }, 0);
             update_interval = Math.floor(Math.random() * 1900) + 900;
@@ -397,10 +399,11 @@ function chat_update(single) {
             update_interval = Math.floor(Math.random() * 3000) + 1000;
         }
         else if (status != 'success') {
-            $("#error-area").text('Connection error, retrying...');
+            var errorArea = $("#error-area");
+            errorArea.text('Connection error, retrying...');
             document.getElementById("msg-data").readOnly = true;
             update_interval = Math.floor(Math.random() * 20000) + 10000;
-            $("#error-area").text(' ')
+            errorArea.text(' ')
         }
 
         if (update_interval != 'None') {
@@ -430,15 +433,16 @@ function playSound(sound) {
         }
         return true;
     }
-    return falseS;
+    return false;
 }
 
 // modal code begins
 
 function uiToggle(ui) {
-    if($('#' + ui).css('display') == 'none') {
+    var uiSelected = $('#' + ui);
+    if(uiSelected.css('display') == 'none') {
         $('.modal').hide();
-        $('#' + ui).show();
+        uiSelected.show();
         $('#modal-background').show();
     }
     else {
@@ -459,14 +463,16 @@ $(function() {
 });
 
 function addUrl() {
-    var cur = $('#msg-data').text();
-    $('#msg-data').val(cur + '[link]' + $('#link-form').val() + '[/link]');
+    var msgField = $('#msg-data');
+    var cur = msgField.text();
+    msgField.val(cur + '[link]' + $('#link-form').val() + '[/link]');
     uiToggle('link');
 }
 
 function addImage() {
-    var cur = $('#msg-data').text();
-    $('#msg-data').val(cur + '[image]' + $('#image-form').val() + '[/image]');
+    var msgField = $('#msg-data');
+    var cur = msgField.text();
+    msgField.val(cur + '[image]' + $('#image-form').val() + '[/image]');
     uiToggle('image');
 }
 
@@ -482,8 +488,9 @@ $(function() {
 });
 
 function addCode() {
-    var cur = $('#msg-data').text();
-    $('#msg-data').val(cur + '[code]' + $('#code-form').val() + '[/code]');
+    var msgField = $('#msg-data');
+    var cur = msgField.text();
+    msgField.val(cur + '[code]' + $('#code-form').val() + '[/code]');
     uiToggle('code');
 }
 
@@ -516,11 +523,13 @@ $(function() {
 });
 
 function inviteUser() {
-    var session = {'_token': getCookie(chat_id), '_recipient': $('#recipient').val(), '_msg': $('#inv-msg').val()};
+    var recipient = $('#recipient');
+    var invMsg = $('#inv-msg');
+    var session = {'_token': getCookie(chat_id), '_recipient': recipient.val(), '_msg': invMsg.val()};
     $.post('/api/' + chat_id + '/inviteUser', session, function (result) { }, 'json');
     uiToggle('invite');
-    $('#recipient').val(' ');
-    $('#inv-msg').val(' ');
+    recipient.val(' ');
+    invMsg.val(' ');
 }
 
 // Admin modal
@@ -540,25 +549,11 @@ function setUsers() {
 }
 
 function admin_exec(func) {
-    var session = {'_token': getCookie(chat_id), '_user': $('#admin-user-list option:selected').text()};
+    var session = {'_token': getCookie(chat_id), '_user': $('#admin-user-list').find('option:selected').text()};
     $.post('/api/' + chat_id + '/' + func, session, function (result) { }, 'json');
 
 }
 
-function adminWarn() {
-    var session = {'_token': getCookie(chat_id), '_user': $('#admin-user-list option:selected').text()};
-    $.post('/api/' + chat_id + '/warn', session, function (result) { }, 'json');
-}
-
-function adminKick() {
-    var session = {'_token': getCookie(chat_id), '_user': $('#admin-user-list option:selected').text()};
-    $.post('/api/' + chat_id + '/kick', session, function (result) { }, 'json');
-}
-
-function adminPromote() {
-    var session = {'_token': getCookie(chat_id), '_user': $('#admin-user-list option:selected').text()};
-    $.post('/api/' + chat_id + '/promote', session, function (result) { }, 'json');
-}
 
 function imHere() {
     if ((presenceUpdated <= new Date().getTime() - 30000) || (presenceUpdated == false)) {
@@ -566,17 +561,12 @@ function imHere() {
             console.log('Sending presence update')
         }
     var session = {'_token': getCookie(chat_id)};
-    $.post('/api/' + chat_id + '/im-here', session, function (result) {
+    $.post('/api/' + chat_id + '/im-here', session, function () {
         presenceUpdated = new Date().getTime();
     }, 'json');
 } }
 
-function imGone() {
-    var session = {'_token': getCookie(chat_id)};
-    $.post('/api/' + chat_id + '/im-gone', session, function(result) {
-        alert('You have exited ' + chat_id)
-    }, 'json');
-}
+
 // modal code ends
 
 
