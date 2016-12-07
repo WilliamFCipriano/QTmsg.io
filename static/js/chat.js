@@ -143,7 +143,12 @@ function send_msg(message) {
     var is_crypto;
 
     if (message == '\n') {
-    return; }
+    return false; }
+
+    if (message.length > 16384) {
+        $("#error-area").text('Error: Message is too long!');
+        return false;
+    }
 
 
     if (CryptoEnabled) {
