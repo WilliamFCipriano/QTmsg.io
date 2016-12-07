@@ -16,9 +16,9 @@ var soundsEnabled = true;
 var presenceUpdated = false;
 
 /** debug modes **/
-var crypto_debug = true;
-var admin_debug = true;
-var feature_debug = true;
+var crypto_debug = false;
+var admin_debug = false;
+var feature_debug = false;
 
 function getCookie(name) {
     if (!(name in Cookies)) {
@@ -73,7 +73,7 @@ function translateKey(key, salt) {
     }
 
     // this will break all sessions on the new year (GMT) by design.
-    // QTMSG is not for very long sessions and you should be out and about on new years.
+    // QTMSG is not for very long sessions and you should be having fun on new years.
     iterations = 0;
     var date = new Date();
     while (iterations < date.getUTCFullYear() * 8) {
@@ -222,7 +222,8 @@ function diffieHellman() {
          var result = getDiffie(bigInt(Keydata['public_n']),bigInt(Keydata['public_g']),bigInt(Keydata['server_key']));
          
          if (result == false) {
-         console.log('diffie-hellman failed, reloading chat.'); 
+             if (crypto_debug) {
+                 console.log('diffie-hellman failed, reloading chat.'); }
          location.reload(true);
          return false;
          }
@@ -418,7 +419,8 @@ function playSound(sound) {
             $('#' + sound + 'Sound').trigger("play");
         }
         catch (err) {
-            console.log(err);
+            if (feature_debug) {
+            console.log(err);}
             return false;
         }
         return true;
