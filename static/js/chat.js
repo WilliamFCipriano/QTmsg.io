@@ -127,6 +127,7 @@ function privateKey() {
 function dice(){
     var type = $('#dice-size-select');
     diceRoll(type.val());
+    uiToggle('dice')
 
 }
 
