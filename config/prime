@@ -1,8 +1,8 @@
 // PRIME NUMBER CONFIG FILE //
 
-randomness_source = urandom
-prime_bits = 32
+randomness_source = random
+prime_bits = 128
 only_use_fermat = FALSE
 total_primes = 4
 search_threads = 2
-abort_search_seconds = 5
+abort_search_seconds = 2
