@@ -68,4 +68,4 @@ def get_primes(prime_count,max_threads):
     config.debug(str(len(primes)) + ' primes found.')
     return primes
 
-primes = get_primes(config.lookup('total_primes'),config.lookup('search_threads'))
+primes = [31876650219800464119374411079445617497, 96661493448635190372706913496361116659, 195733883801130694965283351472420718929, 21303303688914167584889263380590672737]
