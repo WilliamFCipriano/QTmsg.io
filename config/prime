@@ -1,7 +1,7 @@
 // PRIME NUMBER CONFIG FILE //
 
 randomness_source = random
-prime_bits = 128
+prime_bits = 64
 only_use_fermat = FALSE
 total_primes = 4
 search_threads = 2

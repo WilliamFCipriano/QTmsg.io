@@ -30,7 +30,7 @@ def get_rand_prime():
         config.debug('Starting prime search at ' + str(x),l=5)
     else:
         x = random.getrandbits(config.lookup('prime_bits'))
-        x = int(x.encode('hex'), 16)
+        x = int(x)
         config.debug('Starting prime search at ' + str(x),l=5)
     while not found:
         if int(time.time()) - timestamp > config.lookup('abort_search_seconds'):
