@@ -1,5 +1,3 @@
 ## QTmsg.io
 
-### Warning: This is alpha software, when implemented over HTTPS it should be as secure as any HTTPS application but this is not designed to be used over HTTP for secure communcations.
-
-This project was a protoype encrypted chat client. It was written in Python 2 and Javascript. It has since been abandoned. 
+This project was a protoype encrypted chat client I made early on during my journey with Python. It was written in Python 2 and Javascript with JQuery. With my itch scrached, it has since been abandoned. It used Diffie-Hellman key exchange to pass a random key to all the chat partipants and allowed them to chat privately. It was a single page app. Since Python2 has been discontinued it is no longer safe to use.
